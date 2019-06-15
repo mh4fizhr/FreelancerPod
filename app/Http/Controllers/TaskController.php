@@ -7,6 +7,9 @@ use App\Task;
 use App\Project;
 use App\Latest;
 use App\User;
+use App\Client;
+use App\Team;
+use DB;
 use Session;
 
 class TaskController extends Controller
@@ -33,7 +36,9 @@ class TaskController extends Controller
         //
         $projects = Project::all();
         $users = User::all();
-        return view('task.create', compact('projects','users'));
+        $clients = Client::all();
+        $teams = Team::all();
+        return view('task.create', compact('projects','users','clients','teams'));
     }
 
     /**
@@ -55,14 +60,18 @@ class TaskController extends Controller
             'deadline' => 'required',
             'user_id' => 'required',
             'username' => 'required',
+            'deskripsi' => 'required',
             'keterangan' => 'required'
         ]);
 
         $task->name = $request->name;
         $task->keterangan = $request->ket;
+        $task->deskripsi = $request->deskripsi;
         $task->assign = $request->assign;
         $task->project_id = $request->project_id;
+        $task->user_id = $request->user_id;
         $task->deadline = $request->deadline;
+        
         $latest->user_id = $request->user_id;
         $latest->username = $request->username;
         $latest->keterangan = $request->keterangan;
@@ -80,9 +89,14 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     }
-    public function show($id)
+    public function view($id)
     {
         //
+        $tasks = DB::table('tasks')
+                ->where('id','=',$id)
+                ->get();
+        //$tasks = Task::find($id);
+        return view('task.view',compact('tasks'));
     }
 
     /**

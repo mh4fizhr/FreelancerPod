@@ -42,9 +42,14 @@ Route::delete('/project/delete_client/{id}','ClientController@destroy');
 Route::get('/project/task/{id}','TaskController@index');
 Route::get('/project/add_task','TaskController@create');
 Route::post('/project/add_task','TaskController@store');
+Route::get('/project/task/view/{id}','TaskController@view');
 Route::get('/project/edit_task','TaskController@edit');
 Route::post('/project/edit_task','TaskController@update');
 Route::delete('/project/delete_task/{id}','TaskController@destroy');
+
+Route::get('/project/add_discussion','DiscussionController@create');
+Route::post('/project/add_discussion','DiscussionController@store');
+Route::delete('/project/delete_discussion/{id}','DiscussionController@destroy');
 
 Route::get('/project/file/{id}','FileController@index');
 Route::get('/project/add_file','FileController@create');

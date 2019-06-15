@@ -17,8 +17,10 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('keterangan');
+            $table->string('deskripsi');
             $table->string('assign');
             $table->integer('project_id');
+            $table->integer('user_id');
             $table->date('deadline');
             $table->timestamps();
         });

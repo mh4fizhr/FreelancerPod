@@ -44,7 +44,7 @@
 							<label>email</label>
 							<input type="text" name="email" class="form-control" value="{{ $user->email }}" >
 						</div>
-						<button type="submit" class="btn btn-danger">Add Leader</button>
+						<button type="submit" class="btn btn-danger">Add Team</button>
 					</form>
 
 					

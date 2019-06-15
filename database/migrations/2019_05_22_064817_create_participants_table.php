@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDiscussionsTable extends Migration
+class CreateParticipantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateDiscussionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('discussions', function (Blueprint $table) {
+        Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('discussion')->unique();
-            $table->string('participant')->default('public');
-            $table->integer('project_id');
-            $table->integer('user_id');
+            $table->string('discussion');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateDiscussionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('discussions');
+        Schema::dropIfExists('participants');
     }
 }

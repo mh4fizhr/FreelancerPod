@@ -22,7 +22,10 @@ if ( $project->id  == request()->route('id')) { ?>
 	<div class="col-md-8" >
 			<div class="col-md-12" style="background-color: white;margin-bottom: 20px">
 				<h3>Latest Update</h3>
-				<div class="col-md-12" style="background-color: #00ffff;height: 200px;margin-bottom: 20px">
+				<div class="col-md-12" style="background-color: #00ffff;height: 200px;margin-bottom: 20px;border: 1px solid;
+				  padding: 20px;
+				  resize: both;
+				  overflow: auto;">
 					<?php $i = 0; ?>
 					@foreach($latests as $latest)
 					<?php if ( $i < 10) { ?>
@@ -104,16 +107,20 @@ if ( $project->id  == request()->route('id')) { ?>
 						
 						if ( $task->project_id == request()->route('id') && $i < 5) { ?>
 							<tr>
-							<td>{{ $task->name }}</td>
+							<td><a href="/project/task/view/{{ $task->id }}" >{{ $task->name }}</a></td>
 							<td>{{ $task->keterangan }}</td>
 							<td style="color: red">{{ $task->assign }}</td>
 							<td>{{ $task->deadline }}</td>
 							<td>
+								@if( Auth::user()->id == $task->user_id )
 								<form action="/project/delete_task/{{ $task->id }}" method="post">
 									{{ csrf_field() }}
 									{{ method_field('DELETE') }}
+								
 									<button type="submit" class="btn btn-danger" style="padding-right: 13px;padding-left: 13px">Delete</button>
 								</form>
+								@endif
+
 								
 
 									
@@ -154,7 +161,9 @@ if ( $project->id  == request()->route('id')) { ?>
 										{{ csrf_field() }}
 										{{ method_field('DELETE') }}
 										<a href="{{ URL::to( '/public/file/' . $file->file)  }}" class="btn btn-success" style="padding-right: 10px;padding-left: 10px;">Download</a>
+										@if( Auth::user()->id == $file->user_id )
 										<button type="submit" class="btn btn-danger" style="padding-right: 13px;padding-left: 13px">Delete</button>
+										@endif
 									</form>
 										
 
@@ -175,17 +184,61 @@ if ( $project->id  == request()->route('id')) { ?>
 		
 	
 	<a href="/project/ta" style="font-size: 20px">Discussion</a>
-				<a href="/project/add_t" class="btn btn-primary pull-right" style="margin-bottom: 10px">Add Discussion</a>
+				<a href="/project/add_discussion" class="btn btn-primary pull-right" style="margin-bottom: 10px">Add Discussion</a>
 
 
 					<table class="table table-striped table-hover" style="background-color: white">
 						<tr>
 							<th>Judul</th>
 							<th>Discussion</th>
-							<th>file</th>
 							<th>participant</th>
 							<th>Action</th>
 						</tr>
+						
+
+						
+						
+						<tr>
+							@foreach($participants as $participant)
+							@if(Auth::user()->name == $participant->participant)
+							<td>{{ $participant->name }}</td>
+							<td>{{ $participant->discussion }}</td>
+							<td style="color:red">{{ $participant->part }}</td>
+							<td>
+								@if( Auth::user()->id == $participant->user_id )
+								<form action="/project/delete_discussion/{{ $participant->id }}" method="post">
+									{{ csrf_field() }}
+									{{ method_field('DELETE') }}
+								
+									<button type="submit" class="btn btn-danger" style="padding-right: 13px;padding-left: 13px">Delete</button>
+								</form>
+								@endif
+							</td>
+							@endif
+						</tr>
+						<tr>
+							@if($participant->participant == 'public')
+							<td>{{ $participant->name }}</td>
+							<td>{{ $participant->discussion }}</td>
+							<td style="color:green">{{ $participant->participant }}</td>
+							<td>
+								@if( Auth::user()->id == $participant->user_id )
+								<form action="/project/delete_discussion/{{ $participant->id }}" method="post">
+									{{ csrf_field() }}
+									{{ method_field('DELETE') }}
+								
+									<button type="submit" class="btn btn-danger" style="padding-right: 13px;padding-left: 13px">Delete</button>
+								</form>
+								@endif
+							</td>
+
+							@endif
+							@endforeach
+
+						</tr>
+						
+						
+
 						
 					</table>
 				</div>

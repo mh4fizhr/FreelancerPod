@@ -15,6 +15,11 @@
 <div class="col-md-12" style="background-color: white;padding-right: 30px;padding-left: 30px;padding-bottom: 30px">
 	
 				<br>
+				<div>
+					@foreach($errors->all() as $message)
+					{{$message}}
+					@endforeach
+				</div>
 				<div class="card-body">
 					<form action="{{ url('/project/add_task') }}" method="post">
 						{{ csrf_field() }}
@@ -32,11 +37,24 @@
 							<input type="text" name="ket" class="form-control">
 						</div>
 						<div class="form-group">
+							<label>Deskripsi <span style="color: red">(*wajib di isi)</span></label>
+						</div>
+							<textarea style="margin-bottom: 10px" rows="7" cols="100" name="deskripsi" placeholder="deskripsi task ....."></textarea>
+						<div class="form-group">
 							<label>Assign To</label>
 							<select name="assign" class="form-control">
 								<option value="">Pilih User</option>
-								@foreach($users as $user)
-								<option value="{{$user->name}}">{{$user->name}}</option>
+								@foreach($clients as $client)
+								@if($client->project_id == Session::get('project'))
+								<option value="{{$client->name}}">{{$client->name}}</option>
+								@else
+								@endif
+								@endforeach
+								@foreach($teams as $team)
+								@if($team->project_id == Session::get('project'))
+								<option value="{{$team->name}}">{{$team->name}}</option>
+								@else
+								@endif
 								@endforeach
 							</select>
 						</div>

@@ -1,11 +1,12 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title','AdminLTE')
+
+@section('content_header')
+<h1>Add Project</h1>
+@stop
 
 @section('content')
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-8">
-			<div class="card">
-				<div class="card-header">Add Project</div>
 				
 				<div class="card-body">
 					<form action="{{ url('/project/add_project') }}" method="post">
@@ -22,9 +23,5 @@
 						<input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
-				</div>
-			</div>
-		</div>		
-	</div>
-</div>
-@endsection
+
+@stop

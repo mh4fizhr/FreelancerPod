@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Discussion extends Model
+class Fileparticipant extends Model
 {
     //
     public function discussion(){
-    	return $this->hasMany('App\Participant');
+    	return $this->belongsTo('App\Discussion');
     }
 }

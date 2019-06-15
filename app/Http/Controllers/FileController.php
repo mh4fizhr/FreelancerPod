@@ -53,15 +53,26 @@ class FileController extends Controller
             'username' => 'required',
             'keterangan' => 'required'
         ]);
+        
+       // $file = [];
+       // foreach ($request->file('file') as $files) {
+       //     if ($files->isValid()) {
+        //        $file[] = [
+
+        //        ]
+        //    }
+            # code...
+       // }
 
         $tempat_upload = public_path('/file');
         $document = $request->file('file');
         $ext = $document->getClientOriginalExtension();
-        $filename = rand(11111, 99999) . "." . $ext;
+        $filename = $document->getClientOriginalName();
         $document->move($tempat_upload,$filename);
 
         $file->project_id = $request->project_id;
         $file->file = $filename;
+        $file->user_id = $request->user_id;
 
         $latest->user_id = $request->user_id;
         $latest->username = $request->username;
