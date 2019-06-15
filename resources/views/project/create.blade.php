@@ -24,4 +24,8 @@
 						<button type="submit" class="btn btn-primary">Submit</button>
 					</form>
 
+<<<<<<< HEAD
 @stop
+=======
+@stop
+>>>>>>> 61f7e2f6bcf40c32baec12ec8ecac17c5828119b
